@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#050b10">
+<meta name="robots" content="noindex,nofollow">
+<title>Admin Panel · MARCO X WAQAR MD</title>
+<link rel="icon" href="/dp.jpg">
+<style>
+:root{--bg:#050b10;--glass:rgba(14,24,30,.78);--line:rgba(120,255,190,.16);--line2:rgba(255,255,255,.08);--txt:#e8f1f2;--mut:#8aa0a8;--g:#25d366;--c:#22d3ee;--p:#8b5cf6;--err:#ff6b7d;--warn:#ffb020}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;min-height:100vh;background:radial-gradient(900px 500px at 10% -10%,rgba(37,211,102,.14),transparent),radial-gradient(800px 500px at 100% 110%,rgba(139,92,246,.16),transparent),var(--bg);color:var(--txt);font:15px/1.5 "Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif}
+.hide{display:none!important}
+.wrap{max-width:1000px;margin:0 auto;padding:calc(14px + env(safe-area-inset-top)) 14px calc(40px + env(safe-area-inset-bottom))}
+.card{background:var(--glass);border:1px solid var(--line);border-radius:18px;padding:18px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+h1,h2,h3{margin:0}
+input{width:100%;padding:13px 14px;border-radius:12px;border:1px solid var(--line);background:rgba(0,0,0,.35);color:var(--txt);font:inherit;outline:none}
+input:focus{border-color:var(--g);box-shadow:0 0 0 3px rgba(37,211,102,.18)}
+label{display:block;font-size:12px;color:var(--mut);margin:12px 0 6px;text-transform:uppercase;letter-spacing:1px}
+button{font:inherit;cursor:pointer;border:0;border-radius:12px;padding:11px 14px;font-weight:700;color:#03140a;background:linear-gradient(90deg,var(--g),#12b886)}
+button.ghost{background:transparent;color:var(--txt);border:1px solid var(--line)}
+button.warn{background:linear-gradient(90deg,#ffb020,#ff8a3d);color:#2a1500}
+button.red{background:linear-gradient(90deg,#ff6b7d,#e5384f);color:#fff}
+button.sm{padding:8px 11px;font-size:13px;border-radius:10px}
+button:disabled{opacity:.5;cursor:wait}
+.err{margin-top:12px;color:var(--err);font-size:14px}
+/* login */
+#login{max-width:420px;margin:9vh auto 0}
+#login .dp{width:96px;height:96px;border-radius:50%;display:block;margin:0 auto 14px;border:3px solid var(--g);box-shadow:0 0 28px rgba(37,211,102,.4);object-fit:cover}
+#login h2{text-align:center;font-size:22px}
+#login p{text-align:center;color:var(--mut);margin:6px 0 8px;font-size:14px}
+/* top bar */
+.top{display:flex;align-items:center;gap:10px;justify-content:space-between;margin-bottom:14px}
+.top .l{display:flex;align-items:center;gap:10px;min-width:0}
+.top img{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);object-fit:cover}
+.top h1{font-size:17px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top small{color:var(--mut);display:block;font-size:12px}
+.srv{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.pill{font-size:12px;padding:5px 11px;border-radius:99px;border:1px solid var(--line);background:rgba(0,0,0,.25);color:var(--mut)}
+.pill b{color:var(--txt)}
+.pill.ok{color:var(--g);border-color:rgba(37,211,102,.35)}.pill.bad{color:var(--warn);border-color:rgba(255,176,32,.4)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
+.stat{padding:14px 8px;text-align:center;border-radius:16px;background:var(--glass);border:1px solid var(--line)}
+.stat .v{font:800 24px/1.1 ui-monospace,Menlo,Consolas,monospace;color:var(--g)}
+.stat.b .v{color:var(--c)}.stat.r .v{color:var(--err)}.stat.y .v{color:var(--warn)}.stat.p .v{color:var(--p)}
+.stat .t{font-size:11px;color:var(--mut);margin-top:5px;text-transform:uppercase;letter-spacing:1px}
+@media(max-width:640px){.stats{grid-template-columns:repeat(2,1fr)}}
+.tabs{display:flex;gap:8px;overflow-x:auto;margin-bottom:12px;padding-bottom:2px}
+.tabs button{background:transparent;color:var(--mut);border:1px solid var(--line);white-space:nowrap}
+.tabs button.on{color:#03140a;background:linear-gradient(90deg,var(--g),#12b886);border-color:transparent}
+.bar{display:flex;gap:8px;margin-bottom:12px}
+.row{display:flex;gap:12px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;padding:14px;border-radius:14px;border:1px solid var(--line2);background:rgba(0,0,0,.22);margin-bottom:10px}
+.row .n{font:700 17px ui-monospace,Menlo,Consolas,monospace}
+.row .m{font-size:12.5px;color:var(--mut);margin-top:4px;line-height:1.6}
+.row .a{display:flex;gap:6px;flex-wrap:wrap}
+.st{display:inline-block;font-size:11px;font-weight:800;padding:3px 9px;border-radius:99px;margin-left:8px;vertical-align:middle;letter-spacing:.5px}
+.st.on{background:rgba(37,211,102,.16);color:var(--g)}.st.off{background:rgba(255,107,125,.15);color:var(--err)}.st.mid{background:rgba(255,176,32,.16);color:var(--warn)}.st.blk{background:rgba(139,92,246,.2);color:#b79bff}
+.empty{text-align:center;color:var(--mut);padding:30px 10px}
+.chart{display:flex;align-items:flex-end;gap:8px;height:130px;margin:6px 0 4px}
+.chart div{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;font-size:11px;color:var(--mut)}
+.chart i{display:block;width:100%;max-width:46px;border-radius:8px 8px 3px 3px;background:linear-gradient(180deg,var(--c),var(--g));min-height:3px}
+.log{font-size:13px;padding:9px 0;border-bottom:1px solid var(--line2);display:flex;gap:10px}
+.log time{color:var(--mut);white-space:nowrap;font:12px ui-monospace,Menlo,monospace}
+.toast{position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom));transform:translateX(-50%);background:#0d1a20;border:1px solid var(--line);padding:11px 16px;border-radius:12px;font-size:14px;z-index:9;max-width:92vw}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- LOGIN -->
+  <section id="login" class="card hide">
+    <img class="dp" src="/dp.jpg" alt="">
+    <h2>Admin Access</h2>
+    <p>Sign in to manage connected numbers.</p>
+    <label for="em">Gmail / Email</label>
+    <input id="em" type="email" autocomplete="username" placeholder="you@gmail.com">
+    <label for="pw">Password</label>
+    <input id="pw" type="password" autocomplete="current-password" placeholder="••••••••">
+    <button id="loginBtn" style="width:100%;margin-top:16px">Enter Admin Panel</button>
+    <div id="lerr" class="err hide"></div>
+    <div style="text-align:center;margin-top:14px"><a href="/" style="color:var(--mut);font-size:13px">← Back to website</a></div>
+  </section>
+
+  <!-- PANEL -->
+  <section id="panel" class="hide">
+    <div class="top">
+      <div class="l"><img src="/dp.jpg" alt=""><div style="min-width:0"><h1>Admin Panel</h1><small>MARCO X WAQAR MD</small></div></div>
+      <div style="display:flex;gap:8px"><a href="/"><button class="ghost sm">Website</button></a><button class="ghost sm" id="logout">Logout</button></div>
+    </div>
+    <div class="srv" id="srv"></div>
+    <div class="stats" id="stats"></div>
+    <div class="tabs" id="tabs">
+      <button data-t="nums" class="on">📱 Numbers</button>
+      <button data-t="visits">👁 Visits</button>
+      <button data-t="blocked">🚫 Blocked</button>
+      <button data-t="act">📜 Activity</button>
+    </div>
+    <div id="t-nums">
+      <div class="bar"><input id="q" placeholder="Search number…" inputmode="numeric"><button class="ghost" id="copyAll">Copy all</button></div>
+      <div id="list"></div>
+    </div>
+    <div id="t-visits" class="hide"></div>
+    <div id="t-blocked" class="hide"></div>
+    <div id="t-act" class="hide"></div>
+  </section>
+</div>
+<div id="toast" class="toast hide"></div>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+let DATA = null, timer = null, tab = "nums";
+
+function toast(m){ const t = $("toast"); t.textContent = m; t.classList.remove("hide"); clearTimeout(toast.h); toast.h = setTimeout(() => t.classList.add("hide"), 2600); }
+async function api(path, body){
+  const r = await fetch("/api/admin/" + path, body === undefined ? { cache: "no-store" } : { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+  let j = {}; try { j = await r.json(); } catch (_) {}
+  if (r.status === 401 && path !== "login") { showLogin(); throw new Error("Login required"); }
+  if (!r.ok) throw new Error(j.error || ("Error " + r.status));
+  return j;
+}
+const ago = (t) => { if (!t) return "—"; const s = Math.max(0, Math.floor((Date.now() - t) / 1000)); if (s < 60) return s + "s ago"; if (s < 3600) return Math.floor(s / 60) + "m ago"; if (s < 86400) return Math.floor(s / 3600) + "h ago"; return Math.floor(s / 86400) + "d ago"; };
+const dt = (t) => t ? new Date(t).toLocaleString([], { day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit" }) : "—";
+const dur = (s) => { const d = Math.floor(s / 86400); s %= 86400; const h = Math.floor(s / 3600), m = Math.floor(s % 3600 / 60); return (d ? d + "d " : "") + h + "h " + m + "m"; };
+
+/* ---------- login ---------- */
+function showLogin(){ clearInterval(timer); $("panel").classList.add("hide"); $("login").classList.remove("hide"); }
+async function doLogin(){
+  const b = $("loginBtn"); b.disabled = true; $("lerr").classList.add("hide");
+  try { await api("login", { email: $("em").value, password: $("pw").value }); $("pw").value = ""; start(); }
+  catch (e){ $("lerr").textContent = e.message; $("lerr").classList.remove("hide"); }
+  b.disabled = false;
+}
+$("loginBtn").onclick = doLogin;
+$("pw").addEventListener("keydown", (e) => { if (e.key === "Enter") doLogin(); });
+$("logout").onclick = async () => { try { await api("logout", {}); } catch (_) {} showLogin(); };
+
+/* ---------- panel ---------- */
+function stateLabel(x){
+  if (x.blocked) return '<span class="st blk">BLOCKED</span>';
+  if (x.state === "running") return '<span class="st on">ONLINE</span>';
+  if (x.linked && x.running) return '<span class="st mid">CONNECTING</span>';
+  if (x.linked) return '<span class="st off">OFFLINE</span>';
+  return '<span class="st mid">PAIRING</span>';
+}
+function render(){
+  const d = DATA; if (!d) return;
+  $("srv").innerHTML =
+    '<span class="pill ok">● Server online</span>' +
+    '<span class="pill">Uptime <b>' + esc(dur(d.server.uptime)) + '</b></span>' +
+    '<span class="pill">RAM <b>' + d.server.memoryMB + ' MB</b></span>' +
+    '<span class="pill ' + (d.server.persistent ? "ok" : "bad") + '">' + (d.server.persistent ? "Storage saved (Volume)" : "⚠ No Volume: logins erased on redeploy") + '</span>';
+  $("stats").innerHTML =
+    '<div class="stat"><div class="v">' + d.counts.online + '</div><div class="t">Online now</div></div>' +
+    '<div class="stat b"><div class="v">' + d.counts.total + '</div><div class="t">Total numbers</div></div>' +
+    '<div class="stat y"><div class="v">' + d.counts.offline + '</div><div class="t">Offline</div></div>' +
+    '<div class="stat r"><div class="v">' + d.counts.blocked + '</div><div class="t">Blocked</div></div>' +
+    '<div class="stat p"><div class="v">' + d.visits.today + '</div><div class="t">Views today</div></div>' +
+    '<div class="stat p"><div class="v">' + d.visits.todayUnique + '</div><div class="t">Visitors today</div></div>' +
+    '<div class="stat b"><div class="v">' + d.visits.total + '</div><div class="t">Total views</div></div>' +
+    '<div class="stat"><div class="v">' + d.visits.uniqueAllTime + '</div><div class="t">Unique (all)</div></div>';
+  renderNums(); renderVisits(); renderBlocked(); renderAct();
+}
+function renderNums(){
+  const q = $("q").value.replace(/\D/g, "");
+  const rows = DATA.sessions.filter((x) => !q || x.number.includes(q));
+  if (!rows.length){ $("list").innerHTML = '<div class="empty">No numbers connected yet.</div>'; return; }
+  $("list").innerHTML = rows.map((x) =>
+    '<div class="row"><div><div class="n">+' + esc(x.number) + stateLabel(x) + '</div>' +
+    '<div class="m">Linked: ' + esc(dt(x.linkedAt)) + ' · Online since: ' + esc(x.connectedAt ? ago(x.connectedAt) : "—") + ' · Restarts: ' + x.restarts + '</div></div>' +
+    '<div class="a">' +
+    (x.blocked ? '<button class="sm ghost" data-a="unblock" data-n="' + esc(x.number) + '">Unblock</button>' :
+      '<button class="sm ghost" data-a="restart" data-n="' + esc(x.number) + '">Restart</button>' +
+      '<button class="sm warn" data-a="disconnect" data-n="' + esc(x.number) + '">Disconnect</button>' +
+      '<button class="sm red" data-a="block" data-n="' + esc(x.number) + '">Block</button>') +
+    '</div></div>').join("");
+}
+function renderVisits(){
+  const v = DATA.visits, max = Math.max(1, ...v.last7.map((x) => x.views));
+  $("t-visits").innerHTML =
+    '<div class="card" style="margin-bottom:12px"><h3 style="font-size:15px">Last 7 days (views)</h3><div class="chart">' +
+    v.last7.map((x) => '<div title="' + esc(x.day) + ': ' + x.views + ' views, ' + x.uniq + ' visitors"><span>' + x.views + '</span><i style="height:' + Math.max(3, Math.round(x.views / max * 90)) + '%"></i><span>' + esc(x.day.slice(5)) + '</span></div>').join("") + '</div></div>' +
+    '<div class="card"><h3 style="font-size:15px;margin-bottom:6px">Recent visitors</h3>' +
+    (v.recent.length ? v.recent.map((r) => '<div class="log"><time>' + esc(dt(r.t)) + '</time><span>' + esc(r.ip) + ' · <span style="color:var(--mut)">' + esc(r.ua) + '</span></span></div>').join("") : '<div class="empty">No visits yet.</div>') + '</div>';
+}
+function renderBlocked(){
+  const b = DATA.blocked;
+  $("t-blocked").innerHTML =
+    '<div class="bar"><input id="bn" placeholder="Number to block (with country code)" inputmode="numeric"><button class="red" id="bAdd">Block</button></div>' +
+    (b.length ? b.map((x) => '<div class="row"><div><div class="n">+' + esc(x.number) + '<span class="st blk">BLOCKED</span></div><div class="m">' + esc(dt(x.at)) + (x.reason ? ' · ' + esc(x.reason) : '') + '</div></div><div class="a"><button class="sm ghost" data-a="unblock" data-n="' + esc(x.number) + '">Unblock</button></div></div>').join("") : '<div class="empty">No blocked numbers.</div>');
+  const add = $("bAdd"); if (add) add.onclick = () => act("block", $("bn").value);
+}
+const ICON = { connected: "🟢", disconnected: "🔌", blocked: "🚫", unblocked: "✅", pair_request: "🔑", pair_blocked: "⛔", restarted: "🔄", logged_out: "📴", admin_login: "🔐", admin_failed: "⚠️" };
+function renderAct(){
+  const a = DATA.activity;
+  $("t-act").innerHTML = '<div class="card">' + (a.length ? a.map((x) => '<div class="log"><time>' + esc(dt(x.t)) + '</time><span>' + (ICON[x.type] || "•") + ' ' + (x.number ? '<b>+' + esc(x.number) + '</b> ' : '') + esc(x.note || x.type) + '</span></div>').join("") : '<div class="empty">No activity yet.</div>') + '</div>';
+}
+async function load(){
+  try { DATA = await api("overview"); render(); } catch (e) { if (e.message !== "Login required") toast(e.message); }
+}
+function start(){
+  $("login").classList.add("hide"); $("panel").classList.remove("hide");
+  load(); clearInterval(timer); timer = setInterval(() => { if (!document.hidden) load(); }, 6000);
+}
+async function act(a, n){
+  n = String(n || "").replace(/\D/g, "");
+  if (n.length < 6) return toast("Enter a valid number");
+  if (a === "disconnect" && !confirm("Disconnect +" + n + "?\nThe bot is logged out of that WhatsApp and the session is deleted. The user can pair again.")) return;
+  if (a === "block" && !confirm("BLOCK +" + n + "?\nIt is disconnected now and can never pair again until you unblock it.")) return;
+  try { await api(a, { number: n, reason: a === "block" ? "Blocked from admin panel" : undefined }); toast({ disconnect: "Disconnected ✅", block: "Blocked 🚫", unblock: "Unblocked ✅", restart: "Restarting 🔄" }[a]); await load(); }
+  catch (e){ toast(e.message); }
+}
+document.addEventListener("click", (e) => {
+  const b = e.target.closest("button[data-a]"); if (b) act(b.dataset.a, b.dataset.n);
+});
+$("tabs").addEventListener("click", (e) => {
+  const b = e.target.closest("button[data-t]"); if (!b) return; tab = b.dataset.t;
+  document.querySelectorAll("#tabs button").forEach((x) => x.classList.toggle("on", x === b));
+  for (const t of ["nums", "visits", "blocked", "act"]) $("t-" + t).classList.toggle("hide", t !== tab);
+});
+$("q").addEventListener("input", renderNums);
+$("copyAll").onclick = () => { const t = (DATA ? DATA.sessions : []).map((x) => "+" + x.number).join("\n"); navigator.clipboard && navigator.clipboard.writeText(t).then(() => toast("Copied " + (DATA ? DATA.sessions.length : 0) + " numbers")); };
+
+(async () => {
+  try {
+    const me = await api("me");
+    if (!me.configured){ $("login").classList.remove("hide"); $("lerr").textContent = "Admin login is not set up yet. Add ADMIN_EMAIL and ADMIN_PASSWORD in Railway → Variables."; $("lerr").classList.remove("hide"); return; }
+    me.authed ? start() : showLogin();
+  } catch (_) { showLogin(); }
+})();
+</script>
+</body>
+</html>
